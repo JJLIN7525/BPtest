@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>博弈人格測驗</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: #121212;
+      color: #f0f0f0;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2.2em;
+    }
+    .question {
+      margin: 20px 0;
+    }
+    .options label {
+      display: block;
+      margin: 8px 0;
+    }
+    button {
+      background-color: #ffd700;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1em;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+    #result {
+      margin-top: 40px;
+      padding: 20px;
+      background-color: #1e1e1e;
+      border-left: 5px solid #ffd700;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>你的博弈人格是？</h1>
+
+    <form id="quiz">
+      <div class="question">
+        <p>1. 看到連莊牌你會？</p>
+        <div class="options">
+          <label><input type="radio" name="q1" value="A"> 狂追到底，我信長龍！</label>
+          <label><input type="radio" name="q1" value="B"> 看完趨勢再動作，不能衝動</label>
+          <label><input type="radio" name="q1" value="C"> 開局就反打，賭它斷</label>
+        </div>
+      </div>
+
+      <div class="question">
+        <p>2. 每次進場你怎麼安排資金？</p>
+        <div class="options">
+          <label><input type="radio" name="q2" value="A"> 一把定勝負，贏了全上</label>
+          <label><input type="radio" name="q2" value="B"> 設好停損停利，穩紮穩打</label>
+          <label><input type="radio" name="q2" value="C"> 看感覺，今天氣場不對就收手</label>
+        </div>
+      </div>
+
+      <div class="question">
+        <p>3. 面對連輸三局，你會？</p>
+        <div class="options">
+          <label><input type="radio" name="q3" value="A"> 加碼追！不信輸到底</label>
+          <label><input type="radio" name="q3" value="B"> 暫停觀察，分析再決定</label>
+          <label><input type="radio" name="q3" value="C"> 當天風水不對，直接關掉APP</label>
+        </div>
+      </div>
+
+      <button type="button" onclick="calculateResult()">看結果</button>
+    </form>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function calculateResult() {
+      const answers = [
+        document.querySelector('input[name="q1"]:checked')?.value,
+        document.querySelector('input[name="q2"]:checked')?.value,
+        document.querySelector('input[name="q3"]:checked')?.value
+      ];
+
+      if (answers.includes(undefined)) {
+        alert("請完成所有問題");
+        return;
+      }
+
+      const counts = { A: 0, B: 0, C: 0 };
+      answers.forEach(ans => counts[ans]++);
+
+      let resultText = "";
+      if (counts.A >= 2) {
+        resultText = "你是【火拼型】博弈仔：激情如火，敢輸敢衝！但小心不要把風險當作浪漫。";
+      } else if (counts.B >= 2) {
+        resultText = "你是【策略型】博弈仔：數據派代表，輸贏都要有邏輯，AI 是你最好的隊友。";
+      } else {
+        resultText = "你是【感應型】博弈仔：靠第六感吃飯，風水命理配路線，信念就是你的系統。";
+      }
+
+      document.getElementById("result").innerText = resultText;
+    }
+  </script>
+</body>
+</html>
